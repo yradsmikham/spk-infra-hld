@@ -1,1 +1,5 @@
 spk.log
+deploy-key*
+.terraform
+.git
+.DS_Store

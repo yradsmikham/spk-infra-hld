@@ -1,0 +1,7 @@
+address_space =  "10.39.0.0/16"
+keyvault_name = "ydawgie-kv"
+global_resource_group_name = "ydawgie-dev"
+service_principal_id = "dd6c3524-0f34-4b69-8c18-546e63a6a83f"
+subnet_name = "ydawgiesubnet"
+subnet_prefix = "10.39.0.0/24"
+vnet_name = "ydawgievnet"
