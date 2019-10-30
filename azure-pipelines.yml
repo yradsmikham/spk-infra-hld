@@ -1,19 +1,23 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - ydawgie-azure-single-keyvault/central/generated/*
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: |
+    terraform init -backend-config=./backend.tfvars
+  displayName: 'terraform init'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    terraform plan -var-file=./terraform.tfvars
+  displayName: 'terraform plan'
+
+- script: |
+    terraform apply -var-file=./terraform.tfvars
+  displayName: 'terraform apply'
