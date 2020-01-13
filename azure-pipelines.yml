@@ -10,19 +10,35 @@ variables:
   group: 'spk-infra-hld-vg'
 
 steps:
+- checkout: self
+  persistCredentials: true
+  clean: true
+
+- bash: |
+    curl $BEDROCK_BUILD_SCRIPT > build.sh
+    chmod +x ./build.sh
+  displayName: Download Bedrock orchestration script
+  env:
+    BEDROCK_BUILD_SCRIPT: https://raw.githubusercontent.com/Microsoft/bedrock/master/gitops/azure-devops/build.sh
+
 - script: |
-    cp -r ./* "$HOME/"
-    cd "$HOME"
-    echo "DOWNLOADING SPK"
-    VERSION_TO_DOWNLOAD=$(curl -s "https://api.github.com/repos/CatalystCode/spk/releases/latest" | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
-    echo "Latest SPK Version: $VERSION_TO_DOWNLOAD"
-    wget "https://github.com/CatalystCode/spk/releases/download/$VERSION_TO_DOWNLOAD/spk-linux"
-    pwd
-    ls
-    chmod 777 spk-linux && mv spk-linux spk
-    export PATH=$PATH:$HOME/spk
-    ./spk --version
+    . build.sh --source-only
+    get_os_spk
+    get_spk_version
+    download_spk
     spk --version
+      # cp -r ./* "$HOME/"
+      #cd "$HOME"
+      #echo "DOWNLOADING SPK"
+      ##VERSION_TO_DOWNLOAD=$(curl -s "https://api.github.com/repos/CatalystCode/spk/releases/latest" | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
+      #echo "Latest SPK Version: $VERSION_TO_DOWNLOAD"
+      #wget "https://github.com/CatalystCode/spk/releases/download/$VERSION_TO_DOWNLOAD/spk-linux"
+      #pwd
+      #ls
+      #chmod 777 spk-linux && mv spk-linux spk
+      #export PATH=$PATH:$HOME/spk
+      #./spk --version
+      #spk --version
   displayName: 'Install SPK tool'
 
 - script: |
