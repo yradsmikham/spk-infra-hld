@@ -15,7 +15,7 @@ variables:
 steps:
 - script: |
     echo "DOWNLOADING SPK"
-    VERSION_TO_DOWNLOAD=$(curl -s "https://api.github.com/repos/microsoft/spk/releases/latest" | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
+    VERSION_TO_DOWNLOAD=$(curl -s "https://api.github.com/repos/CatalystCode/spk/releases/latest" | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
     echo "Latest SPK Version: $VERSION_TO_DOWNLOAD"
     wget "https://github.com/CatalystCode/spk/releases/download/$VERSION_TO_DOWNLOAD/spk-linux"
     mv spk-linux spk && export PATH=$PATH:$HOME/spk
@@ -52,5 +52,5 @@ steps:
     cd dev-generated/west
     git add .
     git commit -m "Adding generated components"
-    git push "http://user:$ACCESS_TOKEN_SECRET@dev.azure.com/yvradsmi/spk-infra/_git/spk-infra-generated"
+    git push $GENERATED_REPO
   displayName: 'Commit and Push to Generated Repository'
