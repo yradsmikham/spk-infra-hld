@@ -35,16 +35,10 @@ steps:
     download_spk
     echo 'SPK Version: '
     spk --version
-  displayName: 'Install SPK tool'
-
-- script: |
-    cd $HOME
-    pwd
-    ls
+    echo "GENERATING ydawgie-azure-single-keyvault"
     cd ydawgie-azure-single-keyvault
-    ls
     spk infra generate -p west
-  displayName: 'Run `spk infra generate`'
+  displayName: 'SPK'
 
 - script: |
     terraform plan -var-file=./spk.tfvars
