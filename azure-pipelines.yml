@@ -38,6 +38,8 @@ steps:
   displayName: 'Install az-cli'
 
 - script: |
+    pwd
+    ls
     cd ydawgie-azure-single-keyvault
     spk infra generate -p west
   displayName: 'Run `spk infra generate`'
