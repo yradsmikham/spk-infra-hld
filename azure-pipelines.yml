@@ -22,6 +22,12 @@ steps:
     BEDROCK_BUILD_SCRIPT: https://raw.githubusercontent.com/Microsoft/bedrock/master/gitops/azure-devops/build.sh
 
 - script: |
+    dpkg --configure -a
+    curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+    az --version
+  displayName: 'Install az-cli'
+
+- script: |
     . build.sh --source-only
     init
     get_os_spk
@@ -32,15 +38,11 @@ steps:
   displayName: 'Install SPK tool'
 
 - script: |
-    dpkg --configure -a
-    curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-    az --version
-  displayName: 'Install az-cli'
-
-- script: |
+    cd $HOME
     pwd
     ls
     cd ydawgie-azure-single-keyvault
+    ls
     spk infra generate -p west
   displayName: 'Run `spk infra generate`'
 
