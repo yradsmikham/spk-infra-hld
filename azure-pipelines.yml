@@ -17,9 +17,9 @@ steps:
     VERSION_TO_DOWNLOAD=$(curl -s "https://api.github.com/repos/CatalystCode/spk/releases/latest" | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
     echo "Latest SPK Version: $VERSION_TO_DOWNLOAD"
     wget "https://github.com/CatalystCode/spk/releases/download/$VERSION_TO_DOWNLOAD/spk-linux"
-    chmod 777 spk-linux
-    ./spk-linux --version
-    mv spk-linux spk
+    pwd
+    ls
+    chmod 777 spk-linux && mv spk-linux spk
     export PATH=$PATH:$HOME/spk
     ./spk --version
     spk --version
