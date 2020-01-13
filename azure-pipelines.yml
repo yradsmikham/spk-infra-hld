@@ -26,6 +26,10 @@ steps:
     get_os_spk
     get_spk_version
     download_spk
+    cd $HOME
+    ls
+    cd $HOME/spk
+    ls
     spk --version
       # cp -r ./* "$HOME/"
       #cd "$HOME"
