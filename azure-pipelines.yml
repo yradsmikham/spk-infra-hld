@@ -11,13 +11,43 @@ pool:
 
 steps:
 - script: |
-    terraform init -backend-config=./backend.tfvars
+    echo "DOWNLOADING SPK"
+    VERSION_TO_DOWNLOAD=$(curl -s "https://api.github.com/repos/microsoft/spk/releases/latest" | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
+    echo "Latest SPK Version: $VERSION_TO_DOWNLOAD"
+    wget "https://github.com/CatalystCode/spk/releases/download/$VERSION_TO_DOWNLOAD/spk-linux"
+    mv spk-linux spk && export PATH=$PATH:$HOME/spk
+    spk --version
+  displayName: 'Install SPK tool'
+
+- script: |
+    dpkg --configure -a
+    curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+    az --version
+  displayName: 'Install az-cli'
+
+- script: |
+    cd find/dev
+    spk infra generate -p west
+  displayName: 'Run `spk infra generate`'
+
+- script: |
+    terraform plan -var-file=./spk.tfvars
   displayName: 'terraform init'
 
 - script: |
-    terraform plan -var-file=./terraform.tfvars
+    terraform plan -var-file=./spk.tfvars
   displayName: 'terraform plan'
 
 - script: |
-    terraform apply -var-file=./terraform.tfvars
-  displayName: 'terraform apply'
+    cd find
+    git clone $GENERATED_REPO
+    cp -r dev-generated spk-infra-generated/find/
+    cd spk-infra-generated/find
+    git config --global user.email "yvonne.radsmikham@microsoft.com.com"
+    git config --global user.name "yvonne.radsmikham"
+    git status
+    cd dev-generated/west
+    git add .
+    git commit -m "Adding generated components"
+    git push "http://user:$ACCESS_TOKEN_SECRET@dev.azure.com/yvradsmi/spk-infra/_git/spk-infra-generated"
+  displayName: 'Commit and Push to Generated Repository'
