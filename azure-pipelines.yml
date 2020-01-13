@@ -9,6 +9,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  group: 'spk-infra-hld-vg'
+
 steps:
 - script: |
     echo "DOWNLOADING SPK"
