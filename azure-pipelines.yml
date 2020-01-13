@@ -19,7 +19,7 @@ steps:
     echo "Latest SPK Version: $VERSION_TO_DOWNLOAD"
     wget "https://github.com/CatalystCode/spk/releases/download/$VERSION_TO_DOWNLOAD/spk-linux"
     pwd
-    ls
+    spk-linux --version
     mv spk-linux spk
     ls
     export PATH=$PATH:$HOME/spk
