@@ -2,9 +2,6 @@ trigger:
   branches:
     include:
     - master
-  paths:
-    include:
-    - ydawgie-azure-single-keyvault/central/generated/*
 
 pool:
   vmImage: 'ubuntu-latest'
