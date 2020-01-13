@@ -1,0 +1,13 @@
+name: ydawgie-azure-single-keyvault-east
+source: https://github.com/microsoft/bedrock
+template: "/cluster/environments/azure-single-keyvault"
+version: v0.12.0
+backend:
+  storage_account_name: a-ydawgie-storage-account
+  access_key: whatupyd@wgie?
+  container_name: a-ydawgie-container
+  key: a-ydawgie-east-tfstate-key
+variables:
+  cluster_name: ydawgie-cluster-east
+  dns_prefix: ydawgie-cluster-east
+  resource_group_name: ydawgie-east

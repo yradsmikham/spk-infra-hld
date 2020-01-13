@@ -1,0 +1,18 @@
+name: ydawgie-azure-single-keyvault-dev
+source: https://github.com/microsoft/bedrock
+template: "/cluster/environments/azure-single-keyvault"
+version: v0.12.0
+backend:
+  storage_account_name: a-ydawgie-storage-account
+  access_key: whatupyd@wgie?
+  container_name: a-ydawgie-container
+  key: a-ydawgie-tfstate-key
+variables:
+  acr_enabled: 'true'
+  agent_vm_count: '3'
+  gc_enabled: 'true'
+  gitops_poll_interval: 5m
+  gitops_ssh_url: git@github.com:yradsmikham/cloud-native-manifests.git
+  gitops_url_branch: master
+  keyvault_name: ydawgie-kv
+  keyvault_resource_group: ydawgie-kv-rg

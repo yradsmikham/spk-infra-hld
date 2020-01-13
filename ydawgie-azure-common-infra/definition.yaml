@@ -1,0 +1,17 @@
+name: ydawgie-azure-common-infra
+source: "https://github.com/yradsmikham/bedrock"
+template: "/cluster/environments/azure-common-infra"
+version: v0.0.12
+backend:
+  storage_account_name: a-ydawgie-storage-account
+  access_key: whatupyd@wgie?
+  container_name: a-ydawgie-container
+  key: a-ydawgie-tfstate-key
+variables:
+  address_space: 10.39.0.0/16
+  keyvault_name: ydawgie-kv
+  global_resource_group_name: ydawgie-dev
+  service_principal_id: "dd6c3524-0f34-4b69-8c18-546e63a6a83f"
+  subnet_name: ydawgiesubnet
+  subnet_prefix: 10.39.0.0/24
+  vnet_name: ydawgievnet
