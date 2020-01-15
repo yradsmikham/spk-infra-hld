@@ -83,6 +83,7 @@ steps:
     pwd
     ls
     git clone $GENERATED_REPO
+    cd spk-infra-generated
     pwd
     ls
     cp -r $HOME/ydawgie-azure-single-keyvault-generated/west .
