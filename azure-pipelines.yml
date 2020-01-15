@@ -80,9 +80,9 @@ steps:
   displayName: 'Terraform plan'
 
 - script: |
+    cd $HOME
     git clone $GENERATED_REPO
-    cp -r dev-generated spk-infra-generated/find/
-    cd spk-infra-generated/find
+    cp -r ydawgie-azure-single-keyvault-generated/west
 
     #Set git identity
     git config user.email "admin@azuredevops.com"
@@ -93,7 +93,6 @@ steps:
     export GIT_COMMITTER_NAME="Automated Account"
     export EMAIL="admin@azuredevops.com"
 
-    cd dev-generated/west
     git status
     git add .
     git commit -m "Adding generated components"
