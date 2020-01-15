@@ -8,6 +8,8 @@ backend:
   container_name: ydawgie
   key: 'ydawgie-tfstate-key'
 variables:
+  vnet: ydawgie-vnet
+  subnet: ydawgie-subnet
   acr_enabled: 'true'
   agent_vm_size: 'Standard_D4s_v3'
   agent_vm_count: '3'
