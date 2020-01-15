@@ -68,6 +68,7 @@ steps:
   displayName: 'Install Terraform'
 
 - script: |
+    cd $HOME
     pwd
     ls
     cd ydawgie-azure-single-keyvault-generated/west
