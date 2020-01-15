@@ -9,6 +9,7 @@ backend:
   key: 'ydawgie-tfstate-key'
 variables:
   acr_enabled: 'true'
+  agent_vm_size: 'Standard_D4s_v3'
   agent_vm_count: '3'
   gc_enabled: 'true'
   gitops_poll_interval: 5m
@@ -20,5 +21,7 @@ variables:
   service_principal_secret:  "${env:ARM_CLIENT_SECRET}"
   subscription_id:  "${env:ARM_SUBSCRIPTION_ID}"
   tenant_id:  "${env:ARM_TENANT_ID}"
+  address_space: 10.39.0.0/16
+  subnet_prefixes: 10.39.0.0/24
   gitops_ssh_key: "/full/path/to/gitops_repo_private_key"
   ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCek150T2uzyrKXkjYrqy+9bpLqfB/66alvlL2PQYTfEdFiQKwP1EorVW7JCxWlYl5NDHylsexYfeXnd5qlxoLvKvtQ9v/amOqdQ+uthC+vXP4uolTMQPVl3d5JJFqAsToP/nKo7dT0f6rG1swdLic+QIvL6S1kkFsXFYnLBY/8oKirjvJA8hs2rj05gpHE4nv4tGYOkxnxa1agi70RY/20D4o+DcHa4cZCjP8w0HPkshJGKhygo4eN0YZ14/Gva0MaFqLrTutxZXPQulFDe+Evv0wPsvRYUOtTAlA5rejwqON3md7LGb+RW6vo8pNdl/fU1U66ImBo5rBpuYY4Y0X yvonneradsmikham@Yvonnes-MBP-2.guest.corp.microsoft.com"
