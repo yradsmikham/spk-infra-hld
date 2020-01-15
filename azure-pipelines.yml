@@ -14,6 +14,25 @@ steps:
   persistCredentials: true
   clean: true
 
+- task: DownloadPipelineArtifact@2
+  inputs:
+    buildType: 'specific'
+    project: $(SPK_PROJECT_ID)
+    definition: $(SPK_DEFINITION_ID)
+    buildVersionToDownload: 'latestFromBranch'
+    branchName: 'refs/heads/master'
+    itemPattern: "spk*"
+    artifactName: 'spk_linux_node_12'
+    targetPath: '$(System.DefaultWorkingDirectory)'
+- bash: |
+    shopt -s expand_aliases
+    echo "Current Dir is $(pwd)"
+    chmod +x spk-linux
+    alias spk="$(pwd)/spk-linux"
+    spk --version
+  displayName: "Verify SPK downloaded and executable"
+  failOnStderr: true
+
 - bash: |
     curl $BEDROCK_BUILD_SCRIPT > build.sh
     chmod +x ./build.sh
