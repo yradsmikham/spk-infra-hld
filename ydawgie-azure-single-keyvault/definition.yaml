@@ -4,12 +4,10 @@ template: "/cluster/environments/azure-single-keyvault"
 version: v0.12.0
 backend:
   storage_account_name: ydawgie
-  access_key: WxAL04KFQHRGm+HJZLpxjLIfWLhFgyzOlVsB/eiuNAZ4lOv/hLzyfnmCIcgHZuXn2znupqndpNfVlbansNlKrw==
+  access_key: "WxAL04KFQHRGm+HJZLpxjLIfWLhFgyzOlVsB/eiuNAZ4lOv/hLzyfnmCIcgHZuXn2znupqndpNfVlbansNlKrw=="
   container_name: ydawgie
-  key: ydawgie-tfstate-key
+  key: 'ydawgie-tfstate-key'
 variables:
-  agent_vm_count: "3"
-  agent_vm_size: "Standard_D4s_v3"
   acr_enabled: 'true'
   agent_vm_count: '3'
   gc_enabled: 'true'
@@ -18,8 +16,6 @@ variables:
   gitops_url_branch: master
   keyvault_name: ydawgie-kv
   keyvault_resource_group: ydawgie-kv-rg
-  address_space: 10.39.0.0/16
-  subnet_prefixes: 10.39.0.0/24
   service_principal_id: "${env:ARM_CLIENT_ID}"
   service_principal_secret:  "${env:ARM_CLIENT_SECRET}"
   subscription_id:  "${env:ARM_SUBSCRIPTION_ID}"
