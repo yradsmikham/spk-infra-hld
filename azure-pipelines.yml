@@ -80,7 +80,11 @@ steps:
   displayName: 'Terraform plan'
 
 - script: |
+    pwd
+    ls
     git clone $GENERATED_REPO
+    pwd
+    ls
     cp -r $HOME/ydawgie-azure-single-keyvault-generated/west .
 
     #Set git identity
