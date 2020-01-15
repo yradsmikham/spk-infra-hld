@@ -17,8 +17,8 @@ steps:
 - task: DownloadPipelineArtifact@2
   inputs:
     buildType: 'specific'
-    project: $(SPK_PROJECT_ID)
-    definition: $(SPK_DEFINITION_ID)
+    project: f4a6423c-cb89-4298-a0b1-92c9b08bc694
+    definition: 34
     buildVersionToDownload: 'latestFromBranch'
     branchName: 'refs/heads/master'
     itemPattern: "spk*"
