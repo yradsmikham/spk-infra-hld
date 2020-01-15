@@ -49,11 +49,13 @@ steps:
 
 - script: |
     # Will uncomment once new release of SPK is out
+    ls
     . build.sh --source-only
     init
-    # get_os_spk
-    # get_spk_version
-    # download_spk
+    #get_os_spk
+    #get_spk_version
+    #download_spk
+    export PATH=$PATH:$HOME/spk
     # echo 'SPK Version: '
     # spk --version
     echo "GENERATING ydawgie-azure-single-keyvault"
