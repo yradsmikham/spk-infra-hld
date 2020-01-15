@@ -48,14 +48,13 @@ steps:
   displayName: 'Install az-cli'
 
 - script: |
-    # Will uncomment once new release of SPK is out
-    # . build.sh --source-only
-    # init
-    # get_os_spk
-    # get_spk_version
-    # download_spk
-    # echo 'SPK Version: '
-    # spk --version
+    . build.sh --source-only
+    init
+    get_os_spk
+    get_spk_version
+    download_spk
+    echo 'SPK Version: '
+    spk --version
     echo "GENERATING ydawgie-azure-single-keyvault"
     cd ydawgie-azure-single-keyvault
     spk infra generate -p west
