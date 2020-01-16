@@ -88,7 +88,7 @@ steps:
     ls
     rsync -rv --exclude=.terraform $HOME/ydawgie-azure-single-keyvault-generated/west .
 
-    #Set git identity
+    # Set git identity
     git config user.email "admin@azuredevops.com"
     git config user.name "Automated Account"
 
@@ -100,5 +100,12 @@ steps:
     git status
     git add .
     git commit -m "Adding generated components"
-    git push $GENERATED_REPO
+
+    repo_url=$GENERATED_REPO
+    repo_url="${repo_url#http://}"
+    repo_url="${repo_url#https://}"
+
+    echo "GIT PUSH: https://<ACCESS_TOKEN_SECRET>@$repo_url"
+    git push "https://$ACCESS_TOKEN_SECRET@$repo_url"
+
   displayName: 'Commit and Push to Generated Repository'
