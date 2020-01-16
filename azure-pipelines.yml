@@ -68,15 +68,11 @@ steps:
   displayName: 'Install Terraform'
 
 - script: |
-    cd $HOME
     cd ydawgie-azure-single-keyvault-generated/west
     terraform init -backend-config=./backend.tfvars
   displayName: 'Terraform init'
 
 - script: |
-    pwd
-    ls
-    cd $HOME
     cd ydawgie-azure-single-keyvault-generated/west
     terraform plan -var-file=./spk.tfvars
   displayName: 'Terraform plan'
@@ -84,7 +80,7 @@ steps:
 - script: |
     git clone $GENERATED_REPO
     cd spk-infra-generated
-    rsync -rv --exclude=.terraform $HOME/ydawgie-azure-single-keyvault-generated .
+    rsync -rv --exclude=.terraform ./../ydawgie-azure-single-keyvault-generated .
 
     # Set git identity
     git config user.email "admin@azuredevops.com"
