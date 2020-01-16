@@ -82,7 +82,7 @@ steps:
 - script: |
     git clone $GENERATED_REPO
     cd spk-infra-generated
-    rsync -rv --exclude=.terraform $HOME/ydawgie-azure-single-keyvault-generated/ .
+    rsync -rv --exclude=.terraform $HOME/ydawgie-azure-single-keyvault-generated .
 
     # Set git identity
     git config user.email "admin@azuredevops.com"
