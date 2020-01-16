@@ -84,6 +84,11 @@ steps:
     init
     cd $PROJECT_DIRECTORY-generated/$CLUSTER
     terraform plan -var-file=./spk.tfvars
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
   displayName: 'Terraform plan'
 
 - script: |
