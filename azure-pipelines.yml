@@ -74,6 +74,8 @@ steps:
   displayName: 'Terraform init'
 
 - script: |
+    pwd
+    ls
     cd $HOME
     cd ydawgie-azure-single-keyvault-generated/west
     terraform plan -var-file=./spk.tfvars
