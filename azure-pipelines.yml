@@ -58,6 +58,11 @@ steps:
     echo "GENERATING $PROJECT_DIRECTORY"
     cd $PROJECT_DIRECTORY
     spk infra generate -p $CLUSTER
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
   displayName: 'SPK'
 
 - script: |
@@ -114,5 +119,6 @@ steps:
     repo_url="${repo_url#https://}"
     echo "GIT PUSH: https://<ACCESS_TOKEN_SECRET>@$repo_url"
     git push "https://$ACCESS_TOKEN_SECRET@$repo_url"
-
+  env:
+    ACCESS_TOKEN_SECRET: $(ACCESS_TOKEN_SECRET)
   displayName: 'Commit and Push to Generated Repository'
