@@ -86,7 +86,7 @@ steps:
     cd spk-infra-generated
     pwd
     ls
-    cp -r $HOME/ydawgie-azure-single-keyvault-generated/west .
+    rsync -rv --exclude=.terraform $HOME/ydawgie-azure-single-keyvault-generated/west .
 
     #Set git identity
     git config user.email "admin@azuredevops.com"
