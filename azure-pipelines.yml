@@ -55,9 +55,9 @@ steps:
     download_spk
     echo 'SPK Version: '
     spk --version
-    echo "GENERATING ydawgie-azure-single-keyvault"
-    cd ydawgie-azure-single-keyvault
-    spk infra generate -p west
+    echo "GENERATING $PROJECT_DIRECTORY"
+    cd $PROJECT_DIRECTORY
+    spk infra generate -p $CLUSTER
   displayName: 'SPK'
 
 - script: |
@@ -70,22 +70,29 @@ steps:
 - script: |
     . build.sh --source-only
     init
-    cd ydawgie-azure-single-keyvault-generated/west
+    cd $PROJECT_DIRECTORY-generated/$CLUSTER
     terraform init -backend-config=./backend.tfvars
   displayName: 'Terraform init'
 
 - script: |
     . build.sh --source-only
     init
-    cd ydawgie-azure-single-keyvault-generated/west
+    cd $PROJECT_DIRECTORY-generated/$CLUSTER
     terraform plan -var-file=./spk.tfvars
   displayName: 'Terraform plan'
 
 - script: |
     # Clone Generated Repo and copy generated components over
     git clone $GENERATED_REPO
-    cd spk-infra-generated
-    rsync -rv --exclude=.terraform ./../ydawgie-azure-single-keyvault-generated .
+    repo_url=$GENERATED_REPO
+
+    # Extract repo name from url
+    repo_url=$GENERATED_REPO
+    repo=${repo_url##*/}
+    repo_name=${repo%.*}
+
+    cd "$repo_name"
+    rsync -rv --exclude=.terraform ./../$PROJECT_DIRECTORY-generated .
 
     # Set git identity
     git config user.email "admin@azuredevops.com"
@@ -101,11 +108,10 @@ steps:
     git add .
     git commit -m "Adding generated components"
 
+    # Git Push
     repo_url=$GENERATED_REPO
     repo_url="${repo_url#http://}"
     repo_url="${repo_url#https://}"
-
-    # Git Push
     echo "GIT PUSH: https://<ACCESS_TOKEN_SECRET>@$repo_url"
     git push "https://$ACCESS_TOKEN_SECRET@$repo_url"
 
