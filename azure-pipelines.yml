@@ -68,16 +68,21 @@ steps:
   displayName: 'Install Terraform'
 
 - script: |
+    . build.sh --source-only
+    init
     cd ydawgie-azure-single-keyvault-generated/west
     terraform init -backend-config=./backend.tfvars
   displayName: 'Terraform init'
 
 - script: |
+    . build.sh --source-only
+    init
     cd ydawgie-azure-single-keyvault-generated/west
     terraform plan -var-file=./spk.tfvars
   displayName: 'Terraform plan'
 
 - script: |
+    # Clone Generated Repo and copy generated components over
     git clone $GENERATED_REPO
     cd spk-infra-generated
     rsync -rv --exclude=.terraform ./../ydawgie-azure-single-keyvault-generated .
