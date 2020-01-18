@@ -93,9 +93,7 @@ steps:
 
 - script: |
     # Retrieve most recent commit hash from HLD repo
-    pwd
-    ls
-    git rev-parse HEAD
+    commit_hash=$(git rev-parse HEAD)
 
     # Clone Generated Repo and copy generated components over
     git clone $GENERATED_REPO
@@ -124,8 +122,8 @@ steps:
     git commit -m "Adding generated components"
 
     # Create a new branch
-    #PR_BRANCH_NAME=pr_$SUBCOMPONENT_$YAML_PATH_VALUE
-    #git checkout -b $PR_BRANCH_NAME
+    PR_BRANCH_NAME=pr_$commit_hash
+    git checkout -b $PR_BRANCH_NAME
 
     # Git Push
     repo_url=$GENERATED_REPO
@@ -133,6 +131,9 @@ steps:
     repo_url="${repo_url#https://}"
     echo "GIT PUSH: https://<ACCESS_TOKEN_SECRET>@$repo_url"
     git push "https://$ACCESS_TOKEN_SECRET@$repo_url"
+
+    # Create PR
+    git pull-request pr_$commit_hash $GENERATED_REPO master
   env:
     ACCESS_TOKEN_SECRET: $(ACCESS_TOKEN_SECRET)
   displayName: 'Commit and Push to Generated Repository'
