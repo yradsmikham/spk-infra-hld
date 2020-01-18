@@ -92,6 +92,11 @@ steps:
   displayName: 'Terraform plan'
 
 - script: |
+    # Retrieve most recent commit hash from HLD repo
+    pwd
+    ls
+    git rev-parse HEAD
+
     # Clone Generated Repo and copy generated components over
     git clone $GENERATED_REPO
     repo_url=$GENERATED_REPO
@@ -117,6 +122,10 @@ steps:
     git status
     git add .
     git commit -m "Adding generated components"
+
+    # Create a new branch
+    #PR_BRANCH_NAME=pr_$SUBCOMPONENT_$YAML_PATH_VALUE
+    #git checkout -b $PR_BRANCH_NAME
 
     # Git Push
     repo_url=$GENERATED_REPO
