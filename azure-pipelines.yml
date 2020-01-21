@@ -109,7 +109,7 @@ steps:
     repo_name=${repo%.*}
 
     cd "$repo_name"
-    rsync -rv --exclude=.terraform ./../$PROJECT_DIRECTORY-generated .
+    rsync -rv --exclude=.terraform $HOME/$PROJECT_DIRECTORY-generated .
 
     # Set git identity
     git config user.email "admin@azuredevops.com"
