@@ -92,8 +92,6 @@ steps:
   displayName: 'Terraform plan'
 
 - script: |
-    pwd
-    ls
     # Retrieve most recent commit hash from HLD repo
     commit_hash=$(git rev-parse HEAD)
     echo "Commit Hash: $commit_hash"
@@ -137,6 +135,7 @@ steps:
     git push "https://$ACCESS_TOKEN_SECRET@$repo_url" $PR_BRANCH_NAME
 
     # Create PR
+    echo "Creating Pull Request..."
     git request-pull pr_$commit_hash $GENERATED_REPO master
   env:
     ACCESS_TOKEN_SECRET: $(ACCESS_TOKEN_SECRET)
