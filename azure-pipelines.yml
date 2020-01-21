@@ -128,7 +128,7 @@ steps:
     # Add generated files to repository
     git status
     git add .
-    git commit -m "Adding generated components"
+    git commit -m "Adding generated components for $PROJECT_DIRECTORY/$CLUSTER"
 
     # Create a new branch
     PR_BRANCH_NAME=pr_$commit_hash
@@ -138,6 +138,7 @@ steps:
     repo_url=$GENERATED_REPO
     repo_url="${repo_url#http://}"
     repo_url="${repo_url#https://}"
+    echo "$repo_url"
     echo "GIT PUSH: https://<ACCESS_TOKEN_SECRET>@$repo_url"
     git push "https://$ACCESS_TOKEN_SECRET@$repo_url" $PR_BRANCH_NAME
 
@@ -148,11 +149,11 @@ steps:
     hub pull-request -m "Adding Generated Components for $PROJECT_DIRECTORY/$CLUSTER"
 
     # If using AzDo repos (comment above, and uncomment below)
-    # You will need to specify variables $ORG_NAME and $PROJECT_NAME
-    #export AZURE_DEVOPS_EXT_PAT=$ACCESS_TOKEN_SECRET
-    #az devops configure --defaults organization=$ORG_NAME project=$PROJECT_NAME
-    #echo "Making pull request from $PR_BRANCH_NAME against master"
-    #az repos pr create --org $ORG_NAME  -p $PROJECT_NAME -r $REPO -s "$PR_BRANCH_NAME" -t "master" --title "Updating service $branch" -d "Automated pull request for branch $branch"
+    # You will need to specify variables $AZDO_ORG_NAME and $AZDO_PROJECT_NAME
+    export AZURE_DEVOPS_EXT_PAT=$ACCESS_TOKEN_SECRET
+    az devops configure --defaults organization=$AZDO_ORG_NAME project=$AZDO_PROJECT_NAME
+    echo "Making pull request for $PR_BRANCH_NAME against master"
+    az repos pr create --description "Automated PR for $PR_BRANCH_NAME against master"
   env:
     ACCESS_TOKEN_SECRET: $(ACCESS_TOKEN_SECRET)
   displayName: 'Commit and Push to Generated Repository'
