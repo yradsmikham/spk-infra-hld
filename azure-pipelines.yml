@@ -150,10 +150,10 @@ steps:
 
     # If using AzDo repos (comment above, and uncomment below)
     # You will need to specify variables $AZDO_ORG_NAME and $AZDO_PROJECT_NAME
-    export AZURE_DEVOPS_EXT_PAT=$ACCESS_TOKEN_SECRET
-    az devops configure --defaults organization=$AZDO_ORG_NAME project=$AZDO_PROJECT_NAME
-    echo "Making pull request for $PR_BRANCH_NAME against master"
-    az repos pr create --description "Automated PR for $PR_BRANCH_NAME against master"
+    #export AZURE_DEVOPS_EXT_PAT=$ACCESS_TOKEN_SECRET
+    #az devops configure --defaults organization=$AZDO_ORG_NAME project=$AZDO_PROJECT_NAME
+    #echo "Making pull request for $PR_BRANCH_NAME against master"
+    #az repos pr create --description "Automated PR for $PR_BRANCH_NAME against master"
   env:
     ACCESS_TOKEN_SECRET: $(ACCESS_TOKEN_SECRET)
   displayName: 'Commit and Push to Generated Repository'
