@@ -44,8 +44,9 @@ steps:
 - script: |
     dpkg --configure -a
     curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+    az extension add --name azure-devops
     az --version
-  displayName: 'Install az-cli'
+  displayName: 'Install az-cli and az devops extension'
 
 - script: |
     . build.sh --source-only
@@ -71,6 +72,12 @@ steps:
     sudo mv terraform /usr/local/bin
     terraform -version
   displayName: 'Install Terraform'
+
+- script: |
+    sudo add-apt-repository ppa:cpick/hub
+    sudo apt-get update
+    sudo apt-get install hub
+  displayName: 'Install Hub'
 
 - script: |
     . build.sh --source-only
@@ -135,8 +142,17 @@ steps:
     git push "https://$ACCESS_TOKEN_SECRET@$repo_url" $PR_BRANCH_NAME
 
     # Create PR
-    echo "Creating Pull Request..."
-    git request-pull pr_$commit_hash $GENERATED_REPO master
+    # If using GitHub repos...
+    echo "CREATE PULL REQUEST"
+    export GITHUB_TOKEN=$ACCESS_TOKEN_SECRET
+    hub pull-request -m "Adding Generated Components for $PROJECT_CIRECTORY/$CLUSTER"
+
+    # If using AzDo repos (comment above, and uncomment below)
+    # You will need to specify variables $ORG_NAME and $PROJECT_NAME
+    #export AZURE_DEVOPS_EXT_PAT=$ACCESS_TOKEN_SECRET
+    #az devops configure --defaults organization=$ORG_NAME project=$PROJECT_NAME
+    #echo "Making pull request from $PR_BRANCH_NAME against master"
+    #az repos pr create --org $ORG_NAME  -p $PROJECT_NAME -r $REPO -s "$PR_BRANCH_NAME" -t "master" --title "Updating service $branch" -d "Automated pull request for branch $branch"
   env:
     ACCESS_TOKEN_SECRET: $(ACCESS_TOKEN_SECRET)
   displayName: 'Commit and Push to Generated Repository'
