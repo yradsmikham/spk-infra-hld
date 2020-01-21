@@ -92,10 +92,14 @@ steps:
   displayName: 'Terraform plan'
 
 - script: |
+    pwd
+    ls
     # Retrieve most recent commit hash from HLD repo
     commit_hash=$(git rev-parse HEAD)
+    echo "Commit Hash: $commit_hash"
 
     # Clone Generated Repo and copy generated components over
+    echo "Cloning Generated Repo: $GENERATED_REPO"
     git clone $GENERATED_REPO
     repo_url=$GENERATED_REPO
 
