@@ -145,7 +145,7 @@ steps:
     # If using GitHub repos...
     echo "CREATE PULL REQUEST"
     export GITHUB_TOKEN=$ACCESS_TOKEN_SECRET
-    hub pull-request -m "Adding Generated Components for $PROJECT_CIRECTORY/$CLUSTER"
+    hub pull-request -m "Adding Generated Components for $PROJECT_DIRECTORY/$CLUSTER"
 
     # If using AzDo repos (comment above, and uncomment below)
     # You will need to specify variables $ORG_NAME and $PROJECT_NAME
