@@ -74,12 +74,6 @@ steps:
   displayName: 'Install Terraform'
 
 - script: |
-    sudo add-apt-repository ppa:cpick/hub
-    sudo apt-get update
-    sudo apt-get install hub
-  displayName: 'Install Hub'
-
-- script: |
     . build.sh --source-only
     init
     cd $PROJECT_DIRECTORY-generated/$CLUSTER
@@ -146,9 +140,13 @@ steps:
     # If using GitHub repos:
     echo "CREATE PULL REQUEST"
     if [[ $GENERATED_REPO == *"github"* ]]; then
+      echo "Installing Hub"
+      sudo add-apt-repository ppa:cpick/hub
+      sudo apt-get update
+      sudo apt-get install hub
       export GITHUB_TOKEN=$ACCESS_TOKEN_SECRET
       hub pull-request -m "Adding Generated Components for $PROJECT_DIRECTORY/$CLUSTER"
-    elif [[ "$VAR1" < "$VAR2" ]]; then
+    elif [[ $GENERATED_REPO == *"azure"* ]]; then
     # If using AzDo repos:
     # You will need to specify variables $AZDO_ORG_NAME and $AZDO_PROJECT_NAME
       export AZURE_DEVOPS_EXT_PAT=$ACCESS_TOKEN_SECRET
