@@ -63,7 +63,7 @@ steps:
     set -e
     echo "GENERATING $PROJECT_DIRECTORY"
     cd $PROJECT_DIRECTORY
-    spk infra generate -p $CLUSTER
+    spk infra generate -p $CLUSTER_BOI
   env:
     ARM_CLIENT_ID: $(ARM_CLIENT_ID)
     ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
