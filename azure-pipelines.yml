@@ -46,9 +46,15 @@ steps:
     curl -sL https://aka.ms/InstallAzureCLIDeb | bash
     az extension add --name azure-devops
     az --version
-  displayName: 'Install az-cli and az devops extension'
+    wget https://releases.hashicorp.com/terraform/$(tf_version)/terraform_$(tf_version)_linux_amd64.zip -q
+    unzip -q terraform_$(tf_version)_linux_amd64.zip
+    sudo mv terraform /usr/local/bin
+    terraform -version
+  displayName: 'Install az-cli, az devops extension, and Terraform'
 
 - script: |
+    # Exit on error
+    set -e
     . build.sh --source-only
     init
     get_os_spk
@@ -65,13 +71,6 @@ steps:
     ARM_TENANT_ID: $(ARM_TENANT_ID)
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
   displayName: 'SPK'
-
-- script: |
-    wget https://releases.hashicorp.com/terraform/$(tf_version)/terraform_$(tf_version)_linux_amd64.zip -q
-    unzip -q terraform_$(tf_version)_linux_amd64.zip
-    sudo mv terraform /usr/local/bin
-    terraform -version
-  displayName: 'Install Terraform'
 
 - script: |
     . build.sh --source-only
@@ -93,6 +92,9 @@ steps:
   displayName: 'Terraform plan'
 
 - script: |
+    # Exit on error
+    set -e
+
     # Retrieve most recent commit hash from HLD repo
     commit_hash=$(git rev-parse HEAD)
     echo "Commit Hash: $commit_hash"
@@ -146,7 +148,7 @@ steps:
       sudo apt-get install hub
       export GITHUB_TOKEN=$ACCESS_TOKEN_SECRET
       hub pull-request -m "Adding Generated Components for $PROJECT_DIRECTORY/$CLUSTER"
-    elif [[ $GENERATED_REPO == *"azure"* ]]; then
+    elif [[ $GENERATED_REPO == *"azure"* ]] || [[ $GENERATED_REPO == *"visualstudio"* ]];  then
     # If using AzDo repos:
     # You will need to specify variables $AZDO_ORG_NAME and $AZDO_PROJECT_NAME
       export AZURE_DEVOPS_EXT_PAT=$ACCESS_TOKEN_SECRET
@@ -155,6 +157,7 @@ steps:
       az repos pr create --description "Automated PR for $PR_BRANCH_NAME against master"
     else
       echo "Unable to create pull request."
+      exit 1
     fi
   env:
     ACCESS_TOKEN_SECRET: $(ACCESS_TOKEN_SECRET)
