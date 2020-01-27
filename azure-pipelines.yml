@@ -53,8 +53,6 @@ steps:
   displayName: 'Install az-cli, az devops extension, and Terraform'
 
 - script: |
-    # Exit on error
-    set -e
     . build.sh --source-only
     init
     get_os_spk
@@ -62,6 +60,7 @@ steps:
     download_spk
     echo 'SPK Version: '
     spk --version
+    set -e
     echo "GENERATING $PROJECT_DIRECTORY"
     cd $PROJECT_DIRECTORY
     spk infra generate -p $CLUSTER
