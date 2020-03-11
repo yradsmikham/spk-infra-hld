@@ -87,6 +87,7 @@ steps:
     repo_url=$GENERATED_REPO
     repo=${repo_url##*/}
     repo_name=${repo%.*}
+    echo "REPO NAME: $repo_name"
 
     cd "$repo_name"
     rsync -rv --exclude=.terraform $HOME/$PROJECT_DIRECTORY-generated .
