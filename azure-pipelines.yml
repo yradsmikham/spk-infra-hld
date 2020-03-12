@@ -117,6 +117,8 @@ steps:
     echo "********************GIT CHECKOUT********************"
     PR_BRANCH_NAME=pr_$commit_hash
     git checkout -b $PR_BRANCH_NAME
+    echo "********************GIT PULL********************"
+    git pull
 
     # Git Push
     echo "********************GIT PUSH********************"
