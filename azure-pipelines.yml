@@ -7,7 +7,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  group: 'spk-infra-hld-vg'
+  - group: 'spk-infra-hld-vg'
 
 steps:
 - checkout: self
@@ -54,9 +54,6 @@ steps:
 - script: |
     . build.sh --source-only
     init
-    pwd
-    ls
-    echo "PROJECT DIRECTORY: $PROJECT_DIRECTORY"
     cd $PROJECT_DIRECTORY-generated/$CLUSTER
     terraform init -backend-config=./backend.tfvars
   displayName: 'Terraform init'
@@ -103,23 +100,24 @@ steps:
     export GIT_COMMITTER_NAME="Automated Account"
     export EMAIL="admin@azuredevops.com"
 
+    # Format Terraform files
+    terraform fmt
+
     # Add generated files to repository
-    echo "********************GIT STATUS********************"
+    echo "************************************GIT STATUS****************************************"
     git status
-    echo "********************GIT PULL********************"
-    git pull
-    echo "********************GIT ADD********************"
+    echo "************************************GIT ADD****************************************"
     git add .
-    echo "********************GIT COMMIT********************"
+    echo "************************************GIT COMMIT****************************************"
     git commit -m "Adding generated components for $PROJECT_DIRECTORY/$CLUSTER"
 
     # Create a new branch
-    echo "********************GIT CHECKOUT********************"
     PR_BRANCH_NAME=pr_$commit_hash
+    echo "************************************GIT CHECKOUT****************************************"
     git checkout -b $PR_BRANCH_NAME
 
     # Git Push
-    echo "********************GIT PUSH********************"
+    echo "************************************GIT PUSH****************************************"
     repo_url=$GENERATED_REPO
     repo_url="${repo_url#http://}"
     repo_url="${repo_url#https://}"
@@ -137,7 +135,7 @@ steps:
       sudo apt-get install hub
       export GITHUB_TOKEN=$ACCESS_TOKEN_SECRET
       hub pull-request -m "Adding Generated Components for $PROJECT_DIRECTORY/$CLUSTER"
-    elif [[ $GENERATED_REPO == *"azure"* ]] || [[ $GENERATED_REPO == *"visualstudio"* ]];  then
+    elif [[ $GENERATED_REPO == *"azure"* ]] || [[ $GENERATED_REPO == *"visualstudio"* ]]; then
     # If using AzDo repos:
     # You will need to specify variables $AZDO_ORG_NAME and $AZDO_PROJECT_NAME
       export AZURE_DEVOPS_EXT_PAT=$ACCESS_TOKEN_SECRET
