@@ -42,6 +42,10 @@ steps:
     spk --version
     set -e
     echo "GENERATING $PROJECT_DIRECTORY"
+    pwd 
+    echo "----------------------------------"
+    ls
+    echo "----------------------------------"
     cd $PROJECT_DIRECTORY
     spk infra generate -p $CLUSTER
   env:
