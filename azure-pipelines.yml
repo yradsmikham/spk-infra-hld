@@ -80,6 +80,7 @@ steps:
 
     # Clone Generated Repo and copy generated components over
     echo "Cloning Generated Repo: $GENERATED_REPO"
+    echo "************************************GIT CLONE****************************************"
     git clone $GENERATED_REPO
     repo_url=$GENERATED_REPO
 
@@ -90,6 +91,11 @@ steps:
 
     cd "$repo_name"
     rsync -rv --exclude=.terraform $HOME/$PROJECT_DIRECTORY-generated .
+
+    # Create a new branch
+    PR_BRANCH_NAME=pr_$commit_hash
+    echo "************************************GIT CHECKOUT****************************************"
+    git checkout -b $PR_BRANCH_NAME
 
     # Set git identity
     git config user.email "admin@azuredevops.com"
@@ -108,17 +114,12 @@ steps:
     git status
     echo "************************************GIT PULL****************************************"
     git pull
-    echo "************************************GIT REBASE****************************************"
-    git rebase origin/master
+    # echo "************************************GIT REBASE****************************************"
+    # git rebase origin/master
     echo "************************************GIT ADD****************************************"
     git add .
     echo "************************************GIT COMMIT****************************************"
     git commit -m "Adding generated components for $PROJECT_DIRECTORY/$CLUSTER"
-
-    # Create a new branch
-    PR_BRANCH_NAME=pr_$commit_hash
-    echo "************************************GIT CHECKOUT****************************************"
-    git checkout -b $PR_BRANCH_NAME
 
     # Git Push
     echo "************************************GIT PUSH****************************************"
