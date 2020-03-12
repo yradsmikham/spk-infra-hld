@@ -105,6 +105,7 @@ steps:
 
     # Add generated files to repository
     git status
+    git pull
     git add .
     git commit -m "Adding generated components for $PROJECT_DIRECTORY/$CLUSTER"
 
