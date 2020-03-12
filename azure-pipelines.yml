@@ -104,16 +104,22 @@ steps:
     export EMAIL="admin@azuredevops.com"
 
     # Add generated files to repository
+    echo "********************GIT STATUS********************"
     git status
+    echo "********************GIT PULL********************"
     git pull
+    echo "********************GIT ADD********************"
     git add .
+    echo "********************GIT COMMIT********************"
     git commit -m "Adding generated components for $PROJECT_DIRECTORY/$CLUSTER"
 
     # Create a new branch
+    echo "********************GIT CHECKOUT********************"
     PR_BRANCH_NAME=pr_$commit_hash
     git checkout -b $PR_BRANCH_NAME
 
     # Git Push
+    echo "********************GIT PUSH********************"
     repo_url=$GENERATED_REPO
     repo_url="${repo_url#http://}"
     repo_url="${repo_url#https://}"
