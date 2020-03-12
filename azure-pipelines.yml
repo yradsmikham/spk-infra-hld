@@ -42,10 +42,6 @@ steps:
     spk --version
     set -e
     echo "GENERATING $PROJECT_DIRECTORY"
-    pwd 
-    echo "----------------------------------"
-    ls
-    echo "----------------------------------"
     cd $PROJECT_DIRECTORY
     spk infra generate -p $CLUSTER
   env:
@@ -58,6 +54,9 @@ steps:
 - script: |
     . build.sh --source-only
     init
+    pwd
+    ls
+    echo "PROJECT DIRECTORY: $PROJECT_DIRECTORY"
     cd $PROJECT_DIRECTORY-generated/$CLUSTER
     terraform init -backend-config=./backend.tfvars
   displayName: 'Terraform init'
@@ -91,7 +90,6 @@ steps:
     repo_url=$GENERATED_REPO
     repo=${repo_url##*/}
     repo_name=${repo%.*}
-    echo "REPO NAME: $repo_name"
 
     cd "$repo_name"
     rsync -rv --exclude=.terraform $HOME/$PROJECT_DIRECTORY-generated .
