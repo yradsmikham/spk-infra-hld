@@ -82,8 +82,6 @@ steps:
     echo "Cloning Generated Repo: $GENERATED_REPO"
     echo "************************************GIT CLONE****************************************"
     git clone $GENERATED_REPO
-    echo "************************************GIT PULL****************************************"
-    git pull
     repo_url=$GENERATED_REPO
 
     # Extract repo name from url
@@ -92,6 +90,10 @@ steps:
     repo_name=${repo%.*}
 
     cd "$repo_name"
+
+    echo "************************************GIT PULL****************************************"
+    git pull
+
     rsync -rv --exclude=.terraform $HOME/$PROJECT_DIRECTORY-generated .
 
     # Create a new branch
