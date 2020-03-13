@@ -82,6 +82,8 @@ steps:
     echo "Cloning Generated Repo: $GENERATED_REPO"
     echo "************************************GIT CLONE****************************************"
     git clone $GENERATED_REPO
+    echo "************************************GIT PULL****************************************"
+    git pull
     repo_url=$GENERATED_REPO
 
     # Extract repo name from url
@@ -112,13 +114,10 @@ steps:
     # Add generated files to repository
     echo "************************************GIT STATUS****************************************"
     git status
-    # echo "************************************GIT PULL****************************************"
-    # git pull
     # echo "************************************GIT REBASE****************************************"
     # git rebase origin/master
-    echo "************************************GIT ADD****************************************"
+    echo "************************************GIT ADD and GIT COMMIT****************************************"
     git add .
-    echo "************************************GIT COMMIT****************************************"
     git commit -m "Adding generated components for $PROJECT_DIRECTORY/$CLUSTER"
 
     # Git Push
