@@ -87,7 +87,9 @@ steps:
     repo_url=$GENERATED_REPO
     repo=${repo_url##*/}
     repo_name=${repo%.*}
-    cd "REPO NAME: $repo_name"
+
+    echo "REPO NAME: $repo_name"
+    cd "$repo_name"
 
     echo "************************************GIT PULL****************************************"
     git pull
