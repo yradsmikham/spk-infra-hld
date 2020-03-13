@@ -75,7 +75,7 @@ steps:
     set -e
 
     # Retrieve most recent commit hash from HLD repo
-    commit_hash=$(git rev-parse HEAD)
+    commit_hash=$(git rev-parse HEAD | cut -c1-7)
     echo "Commit Hash: $commit_hash"
 
     # Clone Generated Repo and copy generated components over
@@ -96,10 +96,24 @@ steps:
 
     rsync -rv --exclude=.terraform $HOME/$PROJECT_DIRECTORY-generated .
 
+    # Check if PR branch already exists:
+    pr_list=$(git ls-remote origin)
+    if [[ $pr_list == *"pr_$commit_hash"* ]]; then
+      echo "PR Branch already exist. Iterating..."
+      count=$(git ls-remote origin | grep 'pr_$commit_hash' | wc -l | tr -d " ")
+      count=$((count + 1))
+      PR_BRANCH_NAME=pr_$commit_hash_$count
+    else
+      echo "PR Branch does not exist. Creating a new PR Branch"
+      PR_BRANCH_NAME=pr_$commit_hash_0
+      echo "************************************GIT CHECKOUT****************************************"
+      git checkout -b $PR_BRANCH_NAME
+    fi
+
     # Create a new branch
-    PR_BRANCH_NAME=pr_$commit_hash
-    echo "************************************GIT CHECKOUT****************************************"
-    git checkout -b $PR_BRANCH_NAME
+    #PR_BRANCH_NAME=pr_$commit_hash
+    #echo "************************************GIT CHECKOUT****************************************"
+    #git checkout -b $PR_BRANCH_NAME
 
     # Set git identity
     git config user.email "admin@azuredevops.com"
