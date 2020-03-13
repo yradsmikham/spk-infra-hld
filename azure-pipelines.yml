@@ -82,14 +82,12 @@ steps:
     echo "Cloning Generated Repo: $GENERATED_REPO"
     echo "************************************GIT CLONE****************************************"
     git clone $GENERATED_REPO
-    repo_url=$GENERATED_REPO
 
     # Extract repo name from url
     repo_url=$GENERATED_REPO
     repo=${repo_url##*/}
     repo_name=${repo%.*}
-
-    cd "$repo_name"
+    cd "REPO NAME: $repo_name"
 
     echo "************************************GIT PULL****************************************"
     git pull
