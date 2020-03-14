@@ -101,11 +101,9 @@ steps:
     if [[ $pr_list == *"pr-$commit_hash"* ]]; then
       echo "PR Branch already exist. Iterating..."
       echo "***********************************ALL PRS*******************************************"
-      prs=$(git ls-remote origin)
-      echo $prs
-      pr_list=$(git ls-remote origin | grep 'pr-$commit_hash')
+      git ls-remote origin)
       echo "***********************************PR LIST*******************************************"
-      echo $pr_list
+      git ls-remote origin | grep 'pr-$commit_hash'
       count=$(git ls-remote origin | grep 'pr-$commit_hash' | wc -l | tr -d " ")
       echo "count: $count"
       count=$((count + 1))
