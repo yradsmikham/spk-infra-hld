@@ -102,10 +102,7 @@ steps:
       echo "PR Branch already exist. Iterating..."
       echo "***********************************ALL PRS*******************************************"
       git ls-remote origin
-      echo "***********************************PR LIST*******************************************"
-      pr_list=$(git ls-remote origin | grep 'pr-$commit_hash')
-      echo "$pr_list"
-      count=$(git ls-remote origin | grep 'pr-$commit_hash' | wc -l | tr -d " ")
+      count=$(git ls-remote origin | grep "pr-$commit_hash" | wc -l | tr -d " ")
       echo "count: $count"
       count=$((count + 1))
       echo "count: $count"
