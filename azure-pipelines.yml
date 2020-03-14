@@ -103,7 +103,8 @@ steps:
       echo "***********************************ALL PRS*******************************************"
       git ls-remote origin
       echo "***********************************PR LIST*******************************************"
-      git ls-remote origin | grep 'pr-$commit_hash'
+      pr_list=$(git ls-remote origin | grep 'pr-$commit_hash')
+      echo "$pr_list"
       count=$(git ls-remote origin | grep 'pr-$commit_hash' | wc -l | tr -d " ")
       echo "count: $count"
       count=$((count + 1))
